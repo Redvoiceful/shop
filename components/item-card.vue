@@ -6,7 +6,7 @@
     <div class="card__content">
       <div class="card__name">{{name}}</div>
       <div class="card__descr">{{description}}</div>
-      <div class="card__price">{{price}}</div>
+      <div class="card__price">{{numberWithSpaces(price) + ' руб.'}}</div>
     </div>
   </div>
 </template>
@@ -18,20 +18,25 @@ export default {
     image: String,
     name: String,
     description: String,
-    price: String, Number
+    price: Number,
+    show: Boolean
+  },
+  methods: {
+    numberWithSpaces(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .card {
-  width: 332px;
-  margin: 0 8px;
-  max-height: 423px;
+  max-width: 332px;
   height: 100%;
   background-color: rgba(255, 254, 251, 1);
   border-radius: 4px;
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.04), 0 6px 10px rgba(0, 0, 0, 0.02);
+  animation: 2s show ease;
   @media (max-width: 1199px) {
     margin: 8px;
   }
@@ -61,5 +66,9 @@ export default {
     font-weight: 600;
     font-size: 24px;
   }
+}
+@keyframes show {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 </style>
